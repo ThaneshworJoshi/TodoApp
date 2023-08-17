@@ -5,14 +5,13 @@ import { TaskCard } from '../TaskCard'
 
 const StyledBox = styled(Box)(() => {
   return {
+    flex: 1,
     borderRadius: '5px',
     boxShadow: '0px 0px 3px 3px rgba(0,0,0,0.1)',
     padding: '20px 10px 10px 10px',
     backgroundColor: '#f4f5f7',
-    minWidth: '350px',
     width: 'fit-content',
     height: 'auto',
-
     '& .task-card:not(:last-child)': {
       marginBottom: '20px',
     },
@@ -30,7 +29,7 @@ const StyledTitle = styled(Typography)(({}) => {
 
 export const TaskColumn = ({ title, tasks }: TaskColumnProps) => {
   return (
-    <StyledBox>
+    <StyledBox className="task-column">
       <StyledTitle variant="h6">
         {title} {tasks?.length}
       </StyledTitle>
