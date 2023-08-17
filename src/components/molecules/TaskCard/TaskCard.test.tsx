@@ -3,6 +3,7 @@ import { render } from '@testing-library/react'
 import { TaskCard } from './TaskCard.component'
 
 const mockData = {
+  id: '1',
   tag: 'Design',
   title: 'High priority mobile app design health',
   description: 'description',

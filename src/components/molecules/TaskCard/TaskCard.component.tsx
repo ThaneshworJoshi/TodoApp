@@ -5,11 +5,12 @@ import { TaskCardProps } from './TaskCard.type'
 const StyledBox = styled(Box)(({ theme }) => {
   return {
     border: '1px solid rgba(0,0,0,0.2)',
-    boxShadow: '0px 0px 8px 8px rgba(0,0,0,0.1)',
-    borderRadius: theme.spacing(2),
+    boxShadow: '0px 0px 3px 3px rgba(0,0,0,0.1)',
+    // borderRadius: theme.spacing(2),
     maxWidth: '330px',
     minHeight: '300px',
     padding: '20px',
+    backgroundColor: theme.palette.common.white,
   }
 })
 
@@ -29,7 +30,7 @@ export const TaskCard = ({
   media,
 }: TaskCardProps) => {
   return (
-    <StyledBox>
+    <StyledBox className="task-card">
       <Chip label={tag} color="secondary" />
       <StyledTitle>{title}</StyledTitle>
       <hr />
