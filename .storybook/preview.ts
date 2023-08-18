@@ -30,7 +30,6 @@ const preview: Preview = {
     // Adds global styles and theme switching support.
     withThemeFromJSXProvider({
       GlobalStyles: CssBaseline,
-      // Uncomment for theme switching
       Provider: ThemeProvider,
       themes: {
         light: theme,

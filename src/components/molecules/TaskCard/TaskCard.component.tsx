@@ -39,8 +39,8 @@ export const TaskCard = ({
   //   status,
   media,
 }: TaskCardProps) => {
-  const { isSmallMobile, isMobile } = useMediaQuery()
-  console.log(isSmallMobile)
+  const { isMobile } = useMediaQuery()
+
   return (
     <StyledBox className="task-card">
       <StyledChip
