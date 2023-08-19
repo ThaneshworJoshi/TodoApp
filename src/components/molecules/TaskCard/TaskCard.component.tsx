@@ -1,14 +1,24 @@
-import React from 'react'
-import { Box, Chip, IconButton, styled, Typography } from '@mui/material'
+import React, { useMemo } from 'react'
+import {
+  Box,
+  Chip,
+  IconButton,
+  MenuItem,
+  styled,
+  Typography,
+} from '@mui/material'
+import Select from '@mui/material/Select'
+import OutlinedInput from '@mui/material/OutlinedInput'
+
 import { TaskCardProps } from './TaskCard.type'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import { Button } from '../../atoms'
 
 const StyledBox = styled(Box)(({ theme }) => {
   return {
     border: '1px solid rgba(0,0,0,0.2)',
     boxShadow: '0px 0px 3px 3px rgba(0,0,0,0.1)',
-    minHeight: '300px',
     padding: '20px',
     backgroundColor: theme.palette.common.white,
   }
@@ -38,20 +48,45 @@ export const TaskCard = ({
   title,
   description,
   priority,
-  //   status,
+  status,
   media,
   events,
 }: TaskCardProps) => {
   const { isMobile } = useMediaQuery()
 
+  // Define a mapping of priority values to their corresponding color codes
+  const priorityColorMap = {
+    high: 'error',
+    medium: 'info',
+    low: 'secondary',
+  }
+  // Define a mapping of status values to arrays of menu items
+  const statusMenuItems = {
+    incomplete: ['To Do', 'Done'],
+    completed: ['To Do', 'Doing'],
+    inprogress: ['Doing', 'Done'],
+  }
+
+  // Calculate the color for displaying priority, based on the priority value
+  const priorityColor = useMemo(() => {
+    if (priority) {
+      return priorityColorMap[priority as 'high' | 'medium' | 'low']
+    }
+  }, [priority])
+
+  // Generate an array of MenuItems based on the current status
+  const getMenuItems = () => {
+    return statusMenuItems[status].map((item) => (
+      <MenuItem key={item} value={item.toLowerCase()}>
+        {item}
+      </MenuItem>
+    ))
+  }
+
   return (
     <StyledBox className="task-card">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <StyledChip
-          label={tag}
-          color="secondary"
-          size={isMobile ? 'small' : 'medium'}
-        />
+        <StyledChip label={tag} size={isMobile ? 'small' : 'medium'} />
 
         {events?.onDeleteClick && (
           <IconButton
@@ -76,16 +111,34 @@ export const TaskCard = ({
       >
         {description}
       </Typography>
-      {priority && (
-        <>
-          priority:{' '}
-          <StyledChip
-            label={priority}
-            color="primary"
-            size={isMobile ? 'small' : 'medium'}
-          />
-        </>
-      )}
+      <Box display="flex" justifyContent="space-between" mt="30px">
+        {priority && (
+          <Box>
+            priority:{' '}
+            <StyledChip
+              label={priority}
+              //@ts-ignore
+              color={priorityColor}
+              size={isMobile ? 'small' : 'medium'}
+            />
+          </Box>
+        )}
+        <Button size="small">Edit</Button>
+      </Box>
+      <Box display="flex" justifyContent={'flex-end'} mt="30px">
+        <Select
+          size="small"
+          displayEmpty
+          value={''}
+          placeholder="Move"
+          input={<OutlinedInput />}
+        >
+          <MenuItem disabled value="">
+            <>Move</>
+          </MenuItem>
+          {getMenuItems()}
+        </Select>
+      </Box>
     </StyledBox>
   )
 }

@@ -4,7 +4,7 @@ export interface TaskCardProps {
   title: string
   description?: string
   priority?: string
-  status?: string
+  status: 'incomplete' | 'completed' | 'inprogress'
   media?: {
     imageUrl: string
     altText: string
