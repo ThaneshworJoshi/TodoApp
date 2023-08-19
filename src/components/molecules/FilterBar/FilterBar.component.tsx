@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { styled, Box } from '@mui/material'
 import { Button } from '../../atoms'
 import { Modal } from '../Modal'
-import { AddTaskForm } from '../AddTaskForm'
+import { TaskForm } from '../TaskForm'
 import { useAppDispatch } from './../../../redux/hooks'
 import { addTodo } from '../../../redux/features/todoSlice'
 
@@ -51,7 +51,7 @@ export const FilterBar = () => {
         </Box>
       </FilterWrapperBox>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <AddTaskForm
+        <TaskForm
           events={{
             onCancelClick: () => setOpen(false),
             onSubmitClick: addTaskHandler,

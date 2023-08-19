@@ -1,4 +1,4 @@
-export interface AddTaskFormProps {
+export interface TaskFormProps {
   isLoading?: boolean
   events?: {
     onCancelClick?: () => void

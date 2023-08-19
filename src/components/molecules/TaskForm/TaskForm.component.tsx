@@ -3,7 +3,7 @@ import { Box, MenuItem, styled, Typography } from '@mui/material'
 import { Button, TextField } from '../../atoms'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import { AddTaskFormProps } from './AddTaskForm.type'
+import { TaskFormProps } from './TaskForm.type'
 
 const StyledBox = styled(Box)(({ theme }) => {
   return {
@@ -20,7 +20,7 @@ const StyledBox = styled(Box)(({ theme }) => {
   }
 })
 
-export const AddTaskForm = ({ isLoading, events }: AddTaskFormProps) => {
+export const TaskForm = ({ isLoading, events }: TaskFormProps) => {
   const [title, setTitle] = useState('')
   const [tag, setTag] = useState('')
   const [description, setDescription] = useState('')
@@ -101,4 +101,4 @@ export const AddTaskForm = ({ isLoading, events }: AddTaskFormProps) => {
   )
 }
 
-export default AddTaskForm
+export default TaskForm
