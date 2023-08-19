@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import { Box, Container, styled } from '@mui/material'
 import { TaskBoardProps } from './TaskBoard.type'
-import { FilterBar, TaskColumn } from '../../molecules'
+import { FilterBar, Modal, TaskColumn } from '../../molecules'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { useAppDispatch } from '../../../redux/hooks'
 import { deleteTodo } from '../../../redux/features/todoSlice'
@@ -77,24 +75,12 @@ export const TaskBoard = ({ columns }: TaskBoardProps) => {
           </StyledBox>
         </BoardWrapperBox>
       </StyledContainer>
-
-      <Dialog
+      <Modal
         open={openDeleteModal}
+        title="Are you sure want to delete this task?"
         onClose={handleCloseDeleteModal}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {'Are you sure want to delete this task?'}
-        </DialogTitle>
-
-        <DialogActions>
-          <Button onClick={handleCloseDeleteModal}>Cancel</Button>
-          <Button onClick={handleDelete} autoFocus>
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
+        confirmData={{ label: 'Delete', onConfirm: handleDelete }}
+      />
     </>
   )
 }
