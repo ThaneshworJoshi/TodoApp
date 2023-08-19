@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { styled, Box } from '@mui/material'
 import { Button } from '../../atoms'
+import { Modal } from '../Modal'
+import { AddTaskForm } from '../AddTaskForm'
+import { useAppDispatch } from './../../../redux/hooks'
+import { addTodo } from '../../../redux/features/todoSlice'
 
 const FilterWrapperBox = styled(Box)(() => {
   return {
@@ -12,6 +16,17 @@ const FilterWrapperBox = styled(Box)(() => {
 })
 
 export const FilterBar = () => {
+  const [open, setOpen] = useState(false)
+  const dispatch = useAppDispatch()
+
+  const addTaskHandler = async (task: any) => {
+    try {
+      //@ts-ignore
+      await dispatch(addTodo({ ...task, status: 'incomplete' }))
+      setOpen(false)
+    } catch (error) {}
+  }
+
   return (
     <Box p={'10px 0 20px'}>
       <FilterWrapperBox>
@@ -26,11 +41,23 @@ export const FilterBar = () => {
           <Button size="small" variant="text">
             Done
           </Button>
-          <Button size="small" variant="contained">
+          <Button
+            size="small"
+            variant="contained"
+            onClick={() => setOpen(true)}
+          >
             Add Task
           </Button>
         </Box>
       </FilterWrapperBox>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <AddTaskForm
+          events={{
+            onCancelClick: () => setOpen(false),
+            onSubmitClick: addTaskHandler,
+          }}
+        />
+      </Modal>
     </Box>
   )
 }
