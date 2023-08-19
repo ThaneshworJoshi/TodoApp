@@ -9,7 +9,7 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogTitle from '@mui/material/DialogTitle'
 import { useAppDispatch } from '../../../redux/hooks'
-import { deleteTodo } from '../../../redux/features/todoSlice'
+import { deleteTodo, editTodo } from '../../../redux/features/todoSlice'
 
 const StyledContainer = styled(Container)(() => {
   return {}
@@ -57,6 +57,9 @@ export const TaskBoard = ({ columns }: TaskBoardProps) => {
     onDeleteClick: (id: string) => {
       setTaskId(id)
       setOpenDeleteModal(true)
+    },
+    onTaskMove: (task: any) => {
+      dispatch(editTodo(task))
     },
   }
 

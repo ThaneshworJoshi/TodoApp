@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import {
   Box,
   Chip,
@@ -7,7 +7,7 @@ import {
   styled,
   Typography,
 } from '@mui/material'
-import Select from '@mui/material/Select'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
 import OutlinedInput from '@mui/material/OutlinedInput'
 
 import { TaskCardProps } from './TaskCard.type'
@@ -53,7 +53,7 @@ export const TaskCard = ({
   events,
 }: TaskCardProps) => {
   const { isMobile } = useMediaQuery()
-
+  const [taskStatus, setTaskStatus] = useState('')
   // Define a mapping of priority values to their corresponding color codes
   const priorityColorMap = {
     high: 'error',
@@ -62,9 +62,18 @@ export const TaskCard = ({
   }
   // Define a mapping of status values to arrays of menu items
   const statusMenuItems = {
-    incomplete: ['To Do', 'Done'],
-    completed: ['To Do', 'Doing'],
-    inprogress: ['Doing', 'Done'],
+    incomplete: [
+      { label: 'Doing', value: 'inprogress' },
+      { label: 'Done', value: 'completed' },
+    ],
+    completed: [
+      { label: 'To Do', value: 'incomplete' },
+      { label: 'Doing', value: 'inprogress' },
+    ],
+    inprogress: [
+      { label: 'To Do', value: 'incomplete' },
+      { label: 'Done', value: 'completed' },
+    ],
   }
 
   // Calculate the color for displaying priority, based on the priority value
@@ -77,12 +86,24 @@ export const TaskCard = ({
   // Generate an array of MenuItems based on the current status
   const getMenuItems = () => {
     return statusMenuItems[status].map((item) => (
-      <MenuItem key={item} value={item.toLowerCase()}>
-        {item}
+      <MenuItem key={item.label} value={item.value.toLowerCase()}>
+        {item.label}
       </MenuItem>
     ))
   }
 
+  const handleStatusChange = (event: SelectChangeEvent) => {
+    setTaskStatus(event.target.value as string)
+
+    events?.onTaskMove({
+      id,
+      tag,
+      title,
+      description,
+      priority,
+      status: event.target.value,
+    })
+  }
   return (
     <StyledBox className="task-card">
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -129,9 +150,10 @@ export const TaskCard = ({
         <Select
           size="small"
           displayEmpty
-          value={''}
+          value={taskStatus}
           placeholder="Move"
           input={<OutlinedInput />}
+          onChange={handleStatusChange}
         >
           <MenuItem disabled value="">
             <>Move</>

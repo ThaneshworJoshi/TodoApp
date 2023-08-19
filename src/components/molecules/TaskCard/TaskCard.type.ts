@@ -11,5 +11,7 @@ export interface TaskCardProps {
   }
   events?: {
     onDeleteClick?: (id: string) => void
+    onEditClick?: any
+    onTaskMove?: any
   }
 }
