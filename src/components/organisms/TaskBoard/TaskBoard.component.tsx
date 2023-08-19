@@ -68,7 +68,8 @@ export const TaskBoard = ({ columns, todos }: TaskBoardProps) => {
 
   // Determine modal properties based on task to show Delete modal or Edit modal
   const getModalProps = () => {
-    if (taskId) {
+    // @ts-ignore
+    if (taskId && !task?.id) {
       return {
         open: openModal,
         title: 'Are you sure want to delete this task?',
