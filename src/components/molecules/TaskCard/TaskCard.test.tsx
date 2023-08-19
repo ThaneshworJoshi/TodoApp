@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import { TaskCard } from './TaskCard.component'
 
 const mockData = {
@@ -39,5 +39,18 @@ describe('TaskCard component', () => {
     const imageElement = getByAltText('dev image')
     expect(imageElement).toBeInTheDocument()
     expect(imageElement).toHaveAttribute('src', 'https://example.com/image.png')
+  })
+
+  it('should call onDelete when delete button is clicked', () => {
+    const onDeleteMock = jest.fn()
+    const events = {
+      onDeleteClick: onDeleteMock,
+    }
+    const { getByTestId } = render(<TaskCard {...mockData} events={events} />)
+    const deleteButton = getByTestId('delete-button')
+
+    fireEvent.click(deleteButton)
+
+    expect(onDeleteMock).toHaveBeenCalledTimes(1)
   })
 })
