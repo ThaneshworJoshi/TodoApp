@@ -1,8 +1,9 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { TaskColumn } from './TaskColumn.component'
+import { TaskColumnProps } from './TaskColumn.type'
 
-const mockData = {
+const mockData: TaskColumnProps = {
   id: '1',
   title: 'To Do',
   tasks: [
@@ -12,7 +13,7 @@ const mockData = {
       title: 'Task 1',
       description: 'High priority work will be done on time please',
       priority: 'high',
-      status: 'todo',
+      status: 'completed',
     },
     {
       id: '2',
@@ -20,7 +21,7 @@ const mockData = {
       title: 'Task 2',
       description: 'High priority work will be done on time please',
       priority: 'high',
-      status: 'todo',
+      status: 'completed',
       media: {
         imageUrl: '/dev.png',
         altText: 'dev image',

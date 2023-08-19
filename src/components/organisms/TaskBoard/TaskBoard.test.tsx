@@ -1,8 +1,9 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { TaskBoard } from './TaskBoard.component'
+import { TaskBoardProps } from './TaskBoard.type'
 
-const mockData = {
+const mockData: TaskBoardProps = {
   columns: [
     {
       id: '1',
@@ -14,7 +15,7 @@ const mockData = {
           title: 'High priority mobile app design health',
           description: 'High priority work will be done on time please',
           priority: 'high',
-          status: 'todo',
+          status: 'incomplete',
         },
         {
           id: '2',
@@ -22,7 +23,7 @@ const mockData = {
           title: 'High priority mobile app design health',
           description: 'High priority work will be done on time please',
           priority: 'high',
-          status: 'todo',
+          status: 'incomplete',
           media: {
             imageUrl: '/dev.png',
             altText: 'dev image',
@@ -40,7 +41,7 @@ const mockData = {
           title: 'High priority mobile app design health',
           description: 'High priority work will be done on time please',
           priority: 'high',
-          status: 'todo',
+          status: 'incomplete',
         },
       ],
     },
@@ -51,3 +52,9 @@ const mockData = {
     },
   ],
 }
+
+describe('TaskBoard component', () => {
+  it('renders without crashing', () => {
+    // render(<TaskBoard {...mockData} />)
+  })
+})

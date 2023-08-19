@@ -22,7 +22,7 @@ export const Default: Story = {
             title: 'High priority mobile app design health',
             description: 'High priority work will be done on time please',
             priority: 'high',
-            status: 'todo',
+            status: 'completed',
           },
           {
             id: '2',
@@ -30,7 +30,7 @@ export const Default: Story = {
             title: 'High priority mobile app design health',
             description: 'High priority work will be done on time please',
             priority: 'high',
-            status: 'todo',
+            status: 'completed',
             media: {
               imageUrl: '/dev.png',
               altText: 'dev image',
@@ -48,7 +48,7 @@ export const Default: Story = {
             title: 'High priority mobile app design health',
             description: 'High priority work will be done on time please',
             priority: 'high',
-            status: 'todo',
+            status: 'incomplete',
           },
         ],
       },

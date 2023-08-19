@@ -15,7 +15,7 @@ export const Default: Story = {
     title: 'High priority mobile app design health',
     description: 'High priority work will be done on time please',
     priority: 'high',
-    status: 'todo',
+    status: 'completed',
   },
 }
 
@@ -25,7 +25,7 @@ export const CardWithImage: Story = {
     title: 'High priority mobile app design health',
     description: 'High priority work will be done on time please',
     priority: 'high',
-    status: 'todo',
+    status: 'incomplete',
     media: {
       imageUrl: '/dev.png',
       altText: 'dev image',

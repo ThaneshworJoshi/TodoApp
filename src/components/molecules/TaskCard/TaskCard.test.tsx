@@ -1,14 +1,15 @@
 import React from 'react'
 import { fireEvent, render } from '@testing-library/react'
 import { TaskCard } from './TaskCard.component'
+import { TaskCardProps } from './TaskCard.type'
 
-const mockData = {
+const mockData: TaskCardProps = {
   id: '1',
   tag: 'Design',
   title: 'High priority mobile app design health',
   description: 'description',
   priority: 'high',
-  status: 'todo',
+  status: 'incomplete',
   media: {
     imageUrl: 'https://example.com/image.png',
     altText: 'dev image',
