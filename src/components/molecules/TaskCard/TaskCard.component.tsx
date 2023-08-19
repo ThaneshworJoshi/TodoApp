@@ -42,18 +42,11 @@ const StyledChip = styled(Chip)(({ theme }) => {
   }
 })
 
-export const TaskCard = ({
-  id,
-  tag,
-  title,
-  description,
-  priority,
-  status,
-  media,
-  events,
-}: TaskCardProps) => {
+export const TaskCard = (task: TaskCardProps) => {
   const { isMobile } = useMediaQuery()
   const [taskStatus, setTaskStatus] = useState('')
+
+  const { id, tag, title, description, priority, status, media, events } = task
   // Define a mapping of priority values to their corresponding color codes
   const priorityColorMap = {
     high: 'error',
@@ -104,6 +97,7 @@ export const TaskCard = ({
       status: event.target.value,
     })
   }
+
   return (
     <StyledBox className="task-card">
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -144,7 +138,11 @@ export const TaskCard = ({
             />
           </Box>
         )}
-        <Button size="small">Edit</Button>
+        {events?.onEditClick && (
+          <Button size="small" onClick={() => events?.onEditClick?.(task)}>
+            Edit
+          </Button>
+        )}
       </Box>
       <Box display="flex" justifyContent={'flex-end'} mt="30px">
         <Select

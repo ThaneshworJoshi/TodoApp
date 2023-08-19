@@ -20,24 +20,33 @@ const StyledBox = styled(Box)(({ theme }) => {
   }
 })
 
-export const TaskForm = ({ isLoading, events }: TaskFormProps) => {
-  const [title, setTitle] = useState('')
-  const [tag, setTag] = useState('')
-  const [description, setDescription] = useState('')
-  const [priority, setPriority] = useState('')
+export const TaskForm = ({ isLoading, mode, task, events }: TaskFormProps) => {
+  const [title, setTitle] = useState(task?.title || '')
+  const [tag, setTag] = useState(task?.tag || '')
+  const [description, setDescription] = useState(task?.description || '')
+  const [priority, setPriority] = useState(task?.priority || '')
 
-  const handleAddTask = () => {
-    events?.onSubmitClick?.({ title, tag, description, priority })
+  const handleConfirmClick = () => {
+    events?.onSubmitClick?.({
+      id: task?.id,
+      title,
+      tag,
+      description,
+      priority,
+      status: task?.status,
+    })
   }
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handlePriorityChange = (event: SelectChangeEvent) => {
     setPriority(event.target.value as string)
   }
+
+  const formTitle = mode === 'add' ? 'Add Task' : 'Edit Task'
 
   return (
     <StyledBox>
       <Typography variant="h4" fontWeight="bold" mb="40px">
-        Add Task
+        {formTitle}
       </Typography>
       <TextField
         type="text"
@@ -52,7 +61,7 @@ export const TaskForm = ({ isLoading, events }: TaskFormProps) => {
         value={priority}
         placeholder="Priority"
         input={<OutlinedInput />}
-        onChange={handleChange}
+        onChange={handlePriorityChange}
         fullWidth
         required
       >
@@ -81,11 +90,11 @@ export const TaskForm = ({ isLoading, events }: TaskFormProps) => {
       />
       <Button
         loading={isLoading}
-        onClick={handleAddTask}
+        onClick={handleConfirmClick}
         fullWidth
         size="large"
       >
-        Add Task
+        {formTitle}
       </Button>
       {events?.onCancelClick && (
         <Button
