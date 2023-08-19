@@ -27,14 +27,16 @@ const StyledTitle = styled(Typography)(({}) => {
   }
 })
 
-export const TaskColumn = ({ title, tasks }: TaskColumnProps) => {
+export const TaskColumn = ({ title, tasks, events }: TaskColumnProps) => {
   return (
     <StyledBox className="task-column">
       <StyledTitle variant="h6">
         {title} {tasks?.length}
       </StyledTitle>
 
-      {tasks?.map((task) => <TaskCard key={task.id} {...task} />)}
+      {tasks?.map((task) => (
+        <TaskCard key={task.id} {...task} events={events} />
+      ))}
     </StyledBox>
   )
 }

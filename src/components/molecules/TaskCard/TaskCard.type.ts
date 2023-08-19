@@ -1,5 +1,5 @@
 export interface TaskCardProps {
-  id?: string
+  id: string
   tag: string
   title: string
   description?: string
@@ -8,5 +8,8 @@ export interface TaskCardProps {
   media?: {
     imageUrl: string
     altText: string
+  }
+  events?: {
+    onDeleteClick?: (id: string) => void
   }
 }

@@ -69,7 +69,7 @@ export const editTodo = createAsyncThunk(
 
 export const deleteTodo = createAsyncThunk(
   'todo/deleteTodo',
-  async (todoId: number) => {
+  async (todoId: number | string) => {
     const apiUrl = baseUrl + todos.byId.replace('${id}', todoId.toString())
 
     try {

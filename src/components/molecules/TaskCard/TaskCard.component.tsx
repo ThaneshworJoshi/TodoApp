@@ -1,7 +1,8 @@
 import React from 'react'
-import { Box, Chip, styled, Typography } from '@mui/material'
+import { Box, Chip, IconButton, styled, Typography } from '@mui/material'
 import { TaskCardProps } from './TaskCard.type'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
 const StyledBox = styled(Box)(({ theme }) => {
   return {
@@ -32,22 +33,35 @@ const StyledChip = styled(Chip)(({ theme }) => {
 })
 
 export const TaskCard = ({
+  id,
   tag,
   title,
   description,
   priority,
   //   status,
   media,
+  events,
 }: TaskCardProps) => {
   const { isMobile } = useMediaQuery()
 
   return (
     <StyledBox className="task-card">
-      <StyledChip
-        label={tag}
-        color="secondary"
-        size={isMobile ? 'small' : 'medium'}
-      />
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <StyledChip
+          label={tag}
+          color="secondary"
+          size={isMobile ? 'small' : 'medium'}
+        />
+
+        {events?.onDeleteClick && (
+          <IconButton
+            onClick={() => events?.onDeleteClick?.(id)}
+            data-testid="delete-button"
+          >
+            <DeleteForeverIcon sx={{ color: 'red' }} />
+          </IconButton>
+        )}
+      </Box>
       <StyledTitle>{title}</StyledTitle>
       <hr />
       {media?.imageUrl && (
