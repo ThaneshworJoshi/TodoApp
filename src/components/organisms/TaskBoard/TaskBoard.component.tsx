@@ -35,6 +35,8 @@ const StyledBox = styled(Box)(() => {
 export const TaskBoard = ({ columns, todos }: TaskBoardProps) => {
   const [taskId, setTaskId] = useState('')
   const [task, setTask] = useState(null)
+  const [activeTaskTab, setActiveTaskTab] = useState('all')
+
   const [openModal, setOpenModal] = useState(false)
 
   const dispatch = useAppDispatch()
@@ -96,14 +98,30 @@ export const TaskBoard = ({ columns, todos }: TaskBoardProps) => {
     <>
       <StyledContainer maxWidth="lg">
         <BoardWrapperBox>
-          <FilterBar />
+          <FilterBar
+            //@ts-ignore
+            activeTaskTab={activeTaskTab}
+            setActiveTaskTab={setActiveTaskTab}
+          />
           <StyledBox>
             {!isSmallMobile ? (
               columns?.map((column) => (
-                <TaskColumn key={column?.id} {...column} events={events} />
+                <TaskColumn
+                  key={column?.id}
+                  {...column}
+                  events={events}
+                  //@ts-ignore
+                  activeTaskTab={activeTaskTab}
+                />
               ))
             ) : (
-              <TaskColumn title="All Tasks" tasks={todos} events={events} />
+              <TaskColumn
+                title="All Tasks"
+                tasks={todos}
+                //@ts-ignore
+                activeTaskTab={activeTaskTab}
+                events={events}
+              />
             )}
           </StyledBox>
         </BoardWrapperBox>

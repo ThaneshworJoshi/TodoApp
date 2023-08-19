@@ -2,8 +2,11 @@ import React from 'react'
 import { Box, styled, Typography } from '@mui/material'
 import { TaskColumnProps } from './TaskColumn.type'
 import { TaskCard } from '../TaskCard'
+import { useMediaQuery } from '../../../hooks/useMediaQuery'
 
-const StyledBox = styled(Box)(() => {
+const StyledBox = styled(Box)<{ isActiveColumn?: boolean }>(({
+  isActiveColumn,
+}) => {
   return {
     flex: 1,
     borderRadius: '5px',
@@ -15,6 +18,10 @@ const StyledBox = styled(Box)(() => {
     '& .task-card:not(:last-child)': {
       marginBottom: '20px',
     },
+
+    '& .task-card': {
+      opacity: isActiveColumn ? 1 : 0.2,
+    },
   }
 })
 
@@ -24,20 +31,69 @@ const StyledTitle = styled(Typography)(({}) => {
     fontWeight: 'bold',
     color: 'rgb(23, 43, 77)',
     width: '100%',
+    textTransform: 'uppercase',
   }
 })
 
-export const TaskColumn = ({ title, tasks, events }: TaskColumnProps) => {
-  return (
-    <StyledBox className="task-column">
-      <StyledTitle variant="h6">
-        {title} {tasks?.length}
-      </StyledTitle>
+export const TaskColumn = ({
+  title,
+  tasks,
+  events,
+  activeTaskTab,
+}: TaskColumnProps) => {
+  const { isSmallMobile } = useMediaQuery()
 
-      {tasks?.map((task) => (
-        <TaskCard key={task.id} {...task} events={events} />
-      ))}
-    </StyledBox>
+  // Map the active tab to the appropriate column title
+  const mapActiveTabToTitle = () => {
+    if (activeTaskTab === 'completed') {
+      return 'Done'
+    } else if (activeTaskTab === 'inprogress') {
+      return 'Doing'
+    } else {
+      return 'All'
+    }
+  }
+
+  // Display all tasks in one column for small devices
+  if (isSmallMobile) {
+    // Filter tasks based on the active tab and create TaskCard components
+    const filteredTasks = tasks
+      ?.filter((task) => {
+        if (task?.status === activeTaskTab || activeTaskTab === 'all') {
+          return true
+        }
+        return false
+      })
+      .map((task) => <TaskCard key={task.id} {...task} events={events} />)
+
+    return (
+      <StyledBox className="task-column" isActiveColumn={true}>
+        <StyledTitle variant="h6">
+          {mapActiveTabToTitle()} {filteredTasks?.length}
+        </StyledTitle>
+        {filteredTasks}
+      </StyledBox>
+    )
+  }
+
+  // Display the title and all tasks in the column for larger devices
+  return (
+    <>
+      <StyledBox
+        className="task-column"
+        isActiveColumn={
+          activeTaskTab === tasks?.[0]?.status || activeTaskTab === 'all'
+        }
+      >
+        <StyledTitle variant="h6">
+          {title} {tasks?.length}
+        </StyledTitle>
+
+        {tasks?.map((task) => (
+          <TaskCard key={task.id} {...task} events={events} />
+        ))}
+      </StyledBox>
+    </>
   )
 }
 

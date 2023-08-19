@@ -5,6 +5,7 @@ import { Modal } from '../Modal'
 import { TaskForm } from '../TaskForm'
 import { useAppDispatch } from './../../../redux/hooks'
 import { addTodo } from '../../../redux/features/todoSlice'
+import { FilterBarProps } from './FilterBar.type'
 
 const FilterWrapperBox = styled(Box)(() => {
   return {
@@ -15,8 +16,12 @@ const FilterWrapperBox = styled(Box)(() => {
   }
 })
 
-export const FilterBar = () => {
+export const FilterBar = ({
+  activeTaskTab,
+  setActiveTaskTab,
+}: FilterBarProps) => {
   const [open, setOpen] = useState(false)
+
   const dispatch = useAppDispatch()
 
   const addTaskHandler = async (task: any) => {
@@ -32,13 +37,30 @@ export const FilterBar = () => {
       <FilterWrapperBox>
         <Box>
           Filter:
-          <Button size="small" variant="text">
-            Todo
+          <Button
+            size="small"
+            variant={activeTaskTab === 'all' ? 'contained' : 'text'}
+            onClick={() => setActiveTaskTab?.('all')}
+            color="secondary"
+            sx={{ marginLeft: '20px' }}
+          >
+            All
           </Button>
-          <Button size="small" variant="text">
+          <Button
+            size="small"
+            variant={activeTaskTab === 'inprogress' ? 'contained' : 'text'}
+            onClick={() => setActiveTaskTab?.('inprogress')}
+            color="secondary"
+          >
             Doing
           </Button>
-          <Button size="small" variant="text">
+          <Button
+            size="small"
+            variant={activeTaskTab === 'completed' ? 'contained' : 'text'}
+            onClick={() => setActiveTaskTab?.('completed')}
+            color="secondary"
+            sx={{ marginRight: '20px' }}
+          >
             Done
           </Button>
           <Button
