@@ -1,13 +1,8 @@
 import React, { useState } from 'react'
 import { Box, Container, styled } from '@mui/material'
 import { TaskBoardProps } from './TaskBoard.type'
-import { FilterBar, Modal, TaskColumn } from '../../molecules'
+import { FilterBar, Modal, TaskColumn, TaskForm } from '../../molecules'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
-
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogTitle from '@mui/material/DialogTitle'
 import { useAppDispatch } from '../../../redux/hooks'
 import { deleteTodo, editTodo } from '../../../redux/features/todoSlice'
 
@@ -39,28 +34,61 @@ const StyledBox = styled(Box)(() => {
 
 export const TaskBoard = ({ columns }: TaskBoardProps) => {
   const [taskId, setTaskId] = useState('')
-  const [openDeleteModal, setOpenDeleteModal] = useState(false)
+  const [task, setTask] = useState(null)
+  const [openModal, setOpenModal] = useState(false)
 
   const dispatch = useAppDispatch()
   const { isSmallMobile } = useMediaQuery()
 
-  const handleCloseDeleteModal = () => {
-    setOpenDeleteModal(false)
-  }
-
+  // Handle delete operation
   const handleDelete = () => {
     dispatch(deleteTodo(taskId))
-    setOpenDeleteModal(false)
+    setOpenModal(false)
+  }
+  // Handle edit operation
+  const handleEdit = (editedTask: any) => {
+    dispatch(editTodo(editedTask))
+    setOpenModal(false)
   }
 
+  // Event handlers for various actions of task
   const events = {
     onDeleteClick: (id: string) => {
       setTaskId(id)
-      setOpenDeleteModal(true)
+      setOpenModal(true)
     },
     onTaskMove: (task: any) => {
       dispatch(editTodo(task))
     },
+    onEditClick: (task: any) => {
+      setTask(task)
+      setOpenModal(true)
+    },
+  }
+
+  // Determine modal properties based on task to show Delete modal or Edit modal
+  const getModalProps = () => {
+    if (taskId) {
+      return {
+        open: openModal,
+        title: 'Are you sure want to delete this task?',
+        onClose: () => {
+          setOpenModal(false)
+          setTaskId('')
+          setTask(null)
+        },
+        confirmData: { label: 'Delete', onConfirm: handleDelete },
+      }
+    } else {
+      return {
+        open: openModal,
+        onClose: () => {
+          setOpenModal(false)
+          setTaskId('')
+          setTask(null)
+        },
+      }
+    }
   }
 
   return (
@@ -78,12 +106,20 @@ export const TaskBoard = ({ columns }: TaskBoardProps) => {
           </StyledBox>
         </BoardWrapperBox>
       </StyledContainer>
-      <Modal
-        open={openDeleteModal}
-        title="Are you sure want to delete this task?"
-        onClose={handleCloseDeleteModal}
-        confirmData={{ label: 'Delete', onConfirm: handleDelete }}
-      />
+      <Modal {...getModalProps()}>
+        {
+          // @ts-ignore
+          task?.id && (
+            <TaskForm
+              task={task}
+              events={{
+                onCancelClick: () => setOpenModal(false),
+                onSubmitClick: handleEdit,
+              }}
+            />
+          )
+        }
+      </Modal>
     </>
   )
 }
