@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div>
-      <TaskBoard columns={taskBoardData} />
+      <TaskBoard columns={taskBoardData} todos={todos} />
     </div>
   )
 }

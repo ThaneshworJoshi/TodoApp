@@ -44,7 +44,7 @@ const StyledChip = styled(Chip)(({ theme }) => {
 
 export const TaskCard = (task: TaskCardProps) => {
   const { isMobile } = useMediaQuery()
-  const [taskStatus, setTaskStatus] = useState('')
+  const [taskStatus, setTaskStatus] = useState(task?.status ?? '')
 
   const { id, tag, title, description, priority, status, media, events } = task
   // Define a mapping of priority values to their corresponding color codes
@@ -55,18 +55,9 @@ export const TaskCard = (task: TaskCardProps) => {
   }
   // Define a mapping of status values to arrays of menu items
   const statusMenuItems = {
-    incomplete: [
-      { label: 'Doing', value: 'inprogress' },
-      { label: 'Done', value: 'completed' },
-    ],
-    completed: [
-      { label: 'To Do', value: 'incomplete' },
-      { label: 'Doing', value: 'inprogress' },
-    ],
-    inprogress: [
-      { label: 'To Do', value: 'incomplete' },
-      { label: 'Done', value: 'completed' },
-    ],
+    incomplete: ['inprogress', 'completed'],
+    completed: ['incomplete', 'inprogress'],
+    inprogress: ['incomplete', 'completed'],
   }
 
   // Calculate the color for displaying priority, based on the priority value
@@ -79,14 +70,14 @@ export const TaskCard = (task: TaskCardProps) => {
   // Generate an array of MenuItems based on the current status
   const getMenuItems = () => {
     return statusMenuItems[status].map((item) => (
-      <MenuItem key={item.label} value={item.value.toLowerCase()}>
-        {item.label}
+      <MenuItem key={item} value={item.toLowerCase()}>
+        {item}
       </MenuItem>
     ))
   }
 
   const handleStatusChange = (event: SelectChangeEvent) => {
-    setTaskStatus(event.target.value as string)
+    setTaskStatus(event.target.value as any)
 
     events?.onTaskMove({
       id,
@@ -153,9 +144,7 @@ export const TaskCard = (task: TaskCardProps) => {
           input={<OutlinedInput />}
           onChange={handleStatusChange}
         >
-          <MenuItem disabled value="">
-            <>Move</>
-          </MenuItem>
+          <MenuItem value={taskStatus}>{taskStatus}</MenuItem>
           {getMenuItems()}
         </Select>
       </Box>
