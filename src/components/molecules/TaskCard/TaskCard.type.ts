@@ -1,6 +1,7 @@
 export interface TaskCardProps {
   id: string
   tag: string
+  index: number
   title: string
   description?: string
   priority?: string

@@ -11,6 +11,7 @@ type Story = StoryObj<typeof TaskCard>
 
 export const Default: Story = {
   args: {
+    index: 1,
     tag: 'Design',
     title: 'High priority mobile app design health',
     description: 'High priority work will be done on time please',
@@ -21,6 +22,7 @@ export const Default: Story = {
 
 export const CardWithImage: Story = {
   args: {
+    index: 1,
     tag: 'Design',
     title: 'High priority mobile app design health',
     description: 'High priority work will be done on time please',

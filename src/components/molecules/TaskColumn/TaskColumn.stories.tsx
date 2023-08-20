@@ -15,6 +15,7 @@ export const Default: Story = {
     tasks: [
       {
         id: '1',
+        index: 1,
         tag: 'Design',
         title: 'High priority mobile app design health',
         description: 'High priority work will be done on time please',
@@ -23,6 +24,7 @@ export const Default: Story = {
       },
       {
         id: '2',
+        index: 2,
         tag: 'Design',
         title: 'High priority mobile app design health',
         description: 'High priority work will be done on time please',

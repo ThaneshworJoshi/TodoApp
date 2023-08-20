@@ -1,7 +1,7 @@
 import { TaskCardProps } from '../TaskCard'
 
 export interface TaskColumnProps {
-  id?: string
+  id: string
   title: string
   tasks?: TaskCardProps[]
   activeTaskTab?: 'all' | 'inprogress' | 'completed'

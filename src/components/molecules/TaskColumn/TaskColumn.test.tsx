@@ -9,6 +9,7 @@ const mockData: TaskColumnProps = {
   tasks: [
     {
       id: '1',
+      index: 1,
       tag: 'Design',
       title: 'Task 1',
       description: 'High priority work will be done on time please',
@@ -17,6 +18,7 @@ const mockData: TaskColumnProps = {
     },
     {
       id: '2',
+      index: 2,
       tag: 'Design',
       title: 'Task 2',
       description: 'High priority work will be done on time please',

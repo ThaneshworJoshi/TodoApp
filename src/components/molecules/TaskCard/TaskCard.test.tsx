@@ -5,6 +5,7 @@ import { TaskCardProps } from './TaskCard.type'
 
 const mockData: TaskCardProps = {
   id: '1',
+  index: 1,
   tag: 'Design',
   title: 'High priority mobile app design health',
   description: 'description',
