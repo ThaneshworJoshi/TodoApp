@@ -118,29 +118,31 @@ export const TaskBoard = ({ columns, todos }: TaskBoardProps) => {
             }}
           />
 
-          <StyledBox>
-            {!isSmallMobile ? (
-              <DragDropContextHoc>
-                {columns?.map((column) => (
-                  <TaskColumn
-                    key={column?.id}
-                    {...column}
-                    events={events}
-                    //@ts-ignore
-                    activeTaskTab={activeTaskTab}
-                  />
-                ))}
-              </DragDropContextHoc>
-            ) : (
-              <TaskColumn
-                title="All Tasks"
-                tasks={todos}
-                //@ts-ignore
-                activeTaskTab={activeTaskTab}
-                events={events}
-              />
-            )}
-          </StyledBox>
+          <DragDropContextHoc>
+            <StyledBox>
+              {!isSmallMobile ? (
+                <React.Fragment>
+                  {columns?.map((column) => (
+                    <TaskColumn
+                      key={column?.id}
+                      {...column}
+                      events={events}
+                      //@ts-ignore
+                      activeTaskTab={activeTaskTab}
+                    />
+                  ))}
+                </React.Fragment>
+              ) : (
+                <TaskColumn
+                  title="All Tasks"
+                  tasks={todos}
+                  //@ts-ignore
+                  activeTaskTab={activeTaskTab}
+                  events={events}
+                />
+              )}
+            </StyledBox>
+          </DragDropContextHoc>
         </BoardWrapperBox>
       </StyledContainer>
       <Modal {...getModalProps()}>
