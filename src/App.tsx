@@ -16,11 +16,7 @@ function App() {
     dispatch(fetchTodos())
   }, [dispatch])
 
-  return (
-    <div>
-      <TaskBoard columns={taskBoardData} todos={todos} />
-    </div>
-  )
+  return <TaskBoard columns={taskBoardData} todos={todos} />
 }
 
 export default App

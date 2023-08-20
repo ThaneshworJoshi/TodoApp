@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 import TaskCard from './TaskCard.component'
+import { Draggable } from 'react-beautiful-dnd'
 
 const meta: Meta<typeof TaskCard> = {
   component: TaskCard,
@@ -11,6 +12,7 @@ type Story = StoryObj<typeof TaskCard>
 
 export const Default: Story = {
   args: {
+    id: '1',
     index: 1,
     tag: 'Design',
     title: 'High priority mobile app design health',
@@ -22,6 +24,7 @@ export const Default: Story = {
 
 export const CardWithImage: Story = {
   args: {
+    id: '1',
     index: 1,
     tag: 'Design',
     title: 'High priority mobile app design health',

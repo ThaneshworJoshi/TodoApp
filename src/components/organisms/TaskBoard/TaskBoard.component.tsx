@@ -4,7 +4,11 @@ import { TaskBoardProps } from './TaskBoard.type'
 import { FilterBar, Modal, TaskColumn, TaskForm } from '../../molecules'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { useAppDispatch } from '../../../redux/hooks'
-import { deleteTodo, editTodo } from '../../../redux/features/todoSlice'
+import {
+  addTodo,
+  deleteTodo,
+  editTodo,
+} from '../../../redux/features/todoSlice'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import DragDropContextHoc from '../../../common/components/HOC/DragDropContextHoc'
 
@@ -55,6 +59,11 @@ export const TaskBoard = ({ columns, todos }: TaskBoardProps) => {
     setOpenModal(false)
   }
 
+  const handleAdd = (newTask: any) => {
+    //@ts-ignore
+    dispatch(addTodo({ ...newTask, status: 'incomplete' }))
+  }
+
   // Event handlers for various actions of task
   const events = {
     onDeleteClick: (id: string) => {
@@ -103,7 +112,10 @@ export const TaskBoard = ({ columns, todos }: TaskBoardProps) => {
           <FilterBar
             //@ts-ignore
             activeTaskTab={activeTaskTab}
-            setActiveTaskTab={setActiveTaskTab}
+            events={{
+              setActiveTaskTab,
+              addTaskHandler: handleAdd,
+            }}
           />
 
           <StyledBox>

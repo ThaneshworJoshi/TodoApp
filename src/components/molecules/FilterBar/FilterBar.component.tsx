@@ -3,8 +3,7 @@ import { styled, Box } from '@mui/material'
 import { Button } from '../../atoms'
 import { Modal } from '../Modal'
 import { TaskForm } from '../TaskForm'
-import { useAppDispatch } from './../../../redux/hooks'
-import { addTodo } from '../../../redux/features/todoSlice'
+
 import { FilterBarProps } from './FilterBar.type'
 
 const FilterWrapperBox = styled(Box)(() => {
@@ -16,20 +15,12 @@ const FilterWrapperBox = styled(Box)(() => {
   }
 })
 
-export const FilterBar = ({
-  activeTaskTab,
-  setActiveTaskTab,
-}: FilterBarProps) => {
+export const FilterBar = ({ activeTaskTab, events }: FilterBarProps) => {
   const [open, setOpen] = useState(false)
 
-  const dispatch = useAppDispatch()
-
-  const addTaskHandler = async (task: any) => {
-    try {
-      //@ts-ignore
-      await dispatch(addTodo({ ...task, status: 'incomplete' }))
-      setOpen(false)
-    } catch (error) {}
+  const addTaskHandler = (task: any) => {
+    events?.addTaskHandler?.(task)
+    setOpen(false)
   }
 
   return (
@@ -40,7 +31,7 @@ export const FilterBar = ({
           <Button
             size="small"
             variant={activeTaskTab === 'all' ? 'contained' : 'text'}
-            onClick={() => setActiveTaskTab?.('all')}
+            onClick={() => events?.setActiveTaskTab?.('all')}
             color="secondary"
             sx={{ marginLeft: '20px' }}
           >
@@ -49,7 +40,7 @@ export const FilterBar = ({
           <Button
             size="small"
             variant={activeTaskTab === 'inprogress' ? 'contained' : 'text'}
-            onClick={() => setActiveTaskTab?.('inprogress')}
+            onClick={() => events?.setActiveTaskTab?.('inprogress')}
             color="secondary"
           >
             Doing
@@ -57,7 +48,7 @@ export const FilterBar = ({
           <Button
             size="small"
             variant={activeTaskTab === 'completed' ? 'contained' : 'text'}
-            onClick={() => setActiveTaskTab?.('completed')}
+            onClick={() => events?.setActiveTaskTab?.('completed')}
             color="secondary"
             sx={{ marginRight: '20px' }}
           >
@@ -74,6 +65,7 @@ export const FilterBar = ({
       </FilterWrapperBox>
       <Modal open={open} onClose={() => setOpen(false)}>
         <TaskForm
+          mode="add"
           events={{
             onCancelClick: () => setOpen(false),
             onSubmitClick: addTaskHandler,

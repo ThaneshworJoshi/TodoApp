@@ -17,6 +17,12 @@ const mockData: TaskCardProps = {
   },
 }
 
+jest.mock('react-beautiful-dnd', () => ({
+  ...jest.requireActual('react-beautiful-dnd'),
+  Draggable: ({ children }: any) =>
+    children({ draggableProps: {}, innerRef: jest.fn() }),
+}))
+
 describe('TaskCard component', () => {
   it('renders without crashing', () => {
     render(<TaskCard {...mockData} />)

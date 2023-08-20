@@ -1,4 +1,8 @@
 export interface FilterBarProps {
   activeTaskTab?: 'all' | 'inprogress' | 'completed'
-  setActiveTaskTab?: (activeTaskTab: string) => void
+
+  events?: {
+    setActiveTaskTab?: (activeTaskTab: string) => void
+    addTaskHandler?: (newTask: any) => void
+  }
 }

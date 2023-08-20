@@ -2,7 +2,8 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { TaskColumn } from './TaskColumn.component'
 import { TaskColumnProps } from './TaskColumn.type'
-
+import configureStore from 'redux-mock-store' // Import redux-mock-store
+import { Provider } from 'react-redux'
 const mockData: TaskColumnProps = {
   id: '1',
   title: 'To Do',
@@ -32,14 +33,32 @@ const mockData: TaskColumnProps = {
   ],
 }
 
+// Mock react-beautiful-dnd components
+jest.mock('react-beautiful-dnd', () => ({
+  ...jest.requireActual('react-beautiful-dnd'),
+  Draggable: ({ children }: any) =>
+    children({ draggableProps: {}, innerRef: jest.fn() }),
+  Droppable: ({ children }: any) => children({ innerRef: jest.fn() }),
+}))
+
 describe('TaskColumn component', () => {
+  const mockStore = configureStore([])
+  const store = mockStore({})
+
   it('renders without crashing', () => {
-    render(<TaskColumn {...mockData} />)
+    render(
+      <Provider store={store}>
+        <TaskColumn {...mockData} />
+      </Provider>
+    )
   })
 
   it('renders column title, and task cards', () => {
-    const { getByText } = render(<TaskColumn {...mockData} />)
-
+    const { getByText } = render(
+      <Provider store={store}>
+        <TaskColumn {...mockData} />
+      </Provider>
+    )
     // Check if the column title is rendered
     const columnTitle = getByText('To Do 2')
     expect(columnTitle).toBeInTheDocument()

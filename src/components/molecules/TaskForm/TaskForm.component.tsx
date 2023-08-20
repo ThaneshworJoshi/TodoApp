@@ -47,7 +47,12 @@ export const TaskForm = ({ isLoading, mode, task, events }: TaskFormProps) => {
 
   return (
     <StyledBox>
-      <Typography variant="h4" fontWeight="bold" mb="40px">
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        mb="40px"
+        test-dataid="form-title"
+      >
         {formTitle}
       </Typography>
       <TextField
@@ -95,6 +100,7 @@ export const TaskForm = ({ isLoading, mode, task, events }: TaskFormProps) => {
         onClick={handleConfirmClick}
         fullWidth
         size="large"
+        data-testid="confirm-btn"
       >
         {formTitle}
       </Button>
