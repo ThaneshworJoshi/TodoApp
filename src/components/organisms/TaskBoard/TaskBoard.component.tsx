@@ -5,6 +5,8 @@ import { FilterBar, Modal, TaskColumn, TaskForm } from '../../molecules'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { useAppDispatch } from '../../../redux/hooks'
 import { deleteTodo, editTodo } from '../../../redux/features/todoSlice'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import DragDropContextHoc from '../../../common/components/HOC/DragDropContextHoc'
 
 const StyledContainer = styled(Container)(() => {
   return {}
@@ -103,17 +105,20 @@ export const TaskBoard = ({ columns, todos }: TaskBoardProps) => {
             activeTaskTab={activeTaskTab}
             setActiveTaskTab={setActiveTaskTab}
           />
+
           <StyledBox>
             {!isSmallMobile ? (
-              columns?.map((column) => (
-                <TaskColumn
-                  key={column?.id}
-                  {...column}
-                  events={events}
-                  //@ts-ignore
-                  activeTaskTab={activeTaskTab}
-                />
-              ))
+              <DragDropContextHoc>
+                {columns?.map((column) => (
+                  <TaskColumn
+                    key={column?.id}
+                    {...column}
+                    events={events}
+                    //@ts-ignore
+                    activeTaskTab={activeTaskTab}
+                  />
+                ))}
+              </DragDropContextHoc>
             ) : (
               <TaskColumn
                 title="All Tasks"

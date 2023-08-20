@@ -26,6 +26,7 @@ export const TaskForm = ({ isLoading, mode, task, events }: TaskFormProps) => {
   const [description, setDescription] = useState(task?.description || '')
   const [priority, setPriority] = useState(task?.priority || '')
 
+  // Handle confirm click event
   const handleConfirmClick = () => {
     events?.onSubmitClick?.({
       id: task?.id,
@@ -37,6 +38,7 @@ export const TaskForm = ({ isLoading, mode, task, events }: TaskFormProps) => {
     })
   }
 
+  // Handle priority change event
   const handlePriorityChange = (event: SelectChangeEvent) => {
     setPriority(event.target.value as string)
   }

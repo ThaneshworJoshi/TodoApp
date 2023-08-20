@@ -24,8 +24,7 @@ export const useTaskBoardData = (todos: any) => {
         tasks: [],
       },
     ]
-
-    todos.forEach((todo: any) => {
+    todos?.forEach((todo: any) => {
       switch (todo?.status) {
         case 'incomplete':
           //@ts-ignore

@@ -85,7 +85,15 @@ export const deleteTodo = createAsyncThunk(
 export const todoSlice = createSlice({
   name: 'todo',
   initialState,
-  reducers: {},
+  reducers: {
+    updateTodoState: (state, action) => {
+      const updatedTodo = action.payload
+      const index = state.todos.findIndex((todo) => todo.id === updatedTodo.id)
+      if (index !== -1) {
+        state.todos[index] = updatedTodo
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTodos.pending, (state) => {
@@ -151,4 +159,5 @@ export const todoSlice = createSlice({
   },
 })
 
+export const { updateTodoState } = todoSlice.actions
 export default todoSlice.reducer

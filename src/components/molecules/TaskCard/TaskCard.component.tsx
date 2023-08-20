@@ -14,6 +14,7 @@ import { TaskCardProps } from './TaskCard.type'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { Button } from '../../atoms'
+import { Draggable } from 'react-beautiful-dnd'
 
 const StyledBox = styled(Box)(({ theme }) => {
   return {
@@ -90,65 +91,85 @@ export const TaskCard = (task: TaskCardProps) => {
   }
 
   return (
-    <StyledBox className="task-card">
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <StyledChip label={tag} size={isMobile ? 'small' : 'medium'} />
-
-        {events?.onDeleteClick && (
-          <IconButton
-            onClick={() => events?.onDeleteClick?.(id)}
-            data-testid="delete-button"
-          >
-            <DeleteForeverIcon sx={{ color: 'red' }} />
-          </IconButton>
-        )}
-      </Box>
-      <StyledTitle>{title}</StyledTitle>
-      <hr />
-      {media?.imageUrl && (
-        <Box>
-          <img src={media?.imageUrl} alt={media?.altText} width={'100%'} />
-        </Box>
-      )}
-      <Typography
-        color={'rgba(0, 0, 0, 0.4)'}
-        mb="20px"
-        fontSize={isMobile ? '.8rem' : 'initial'}
-      >
-        {description}
-      </Typography>
-      <Box display="flex" justifyContent="space-between" mt="30px">
-        {priority && (
-          <Box>
-            priority:{' '}
-            <StyledChip
-              label={priority}
-              //@ts-ignore
-              color={priorityColor}
-              size={isMobile ? 'small' : 'medium'}
-            />
-          </Box>
-        )}
-        {events?.onEditClick && (
-          <Button size="small" onClick={() => events?.onEditClick?.(task)}>
-            Edit
-          </Button>
-        )}
-      </Box>
-      <Box display="flex" justifyContent={'flex-end'} mt="30px">
-        <Select
-          size="small"
-          displayEmpty
-          value={taskStatus}
-          placeholder="Move"
-          input={<OutlinedInput />}
-          onChange={handleStatusChange}
+    //@ts-ignore
+    <Draggable
+      key={task.id}
+      draggableId={task?.id.toString()}
+      index={task.index}
+    >
+      {(provided, snapshot) => (
+        <StyledBox
+          className="task-card"
+          ref={provided.innerRef}
+          //@ts-ignore
+          snapshot={snapshot}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
         >
-          <MenuItem value={taskStatus}>{taskStatus}</MenuItem>
-          {getMenuItems()}
-        </Select>
-      </Box>
-    </StyledBox>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <StyledChip label={tag} size={isMobile ? 'small' : 'medium'} />
+
+            {events?.onDeleteClick && (
+              <IconButton
+                onClick={() => events?.onDeleteClick?.(id)}
+                data-testid="delete-button"
+              >
+                <DeleteForeverIcon sx={{ color: 'red' }} />
+              </IconButton>
+            )}
+          </Box>
+          <StyledTitle>{title}</StyledTitle>
+          <hr />
+          {media?.imageUrl && (
+            <Box>
+              <img src={media?.imageUrl} alt={media?.altText} width={'100%'} />
+            </Box>
+          )}
+          <Typography
+            color={'rgba(0, 0, 0, 0.4)'}
+            mb="20px"
+            fontSize={isMobile ? '.8rem' : 'initial'}
+          >
+            {description}
+          </Typography>
+          <Box display="flex" justifyContent="space-between" mt="30px">
+            {priority && (
+              <Box>
+                priority:{' '}
+                <StyledChip
+                  label={priority}
+                  //@ts-ignore
+                  color={priorityColor}
+                  size={isMobile ? 'small' : 'medium'}
+                />
+              </Box>
+            )}
+            {events?.onEditClick && (
+              <Button size="small" onClick={() => events?.onEditClick?.(task)}>
+                Edit
+              </Button>
+            )}
+          </Box>
+          <Box display="flex" justifyContent={'flex-end'} mt="30px">
+            <Select
+              size="small"
+              displayEmpty
+              value={taskStatus}
+              placeholder="Move"
+              input={<OutlinedInput />}
+              onChange={handleStatusChange}
+            >
+              <MenuItem value={taskStatus}>{taskStatus}</MenuItem>
+              {getMenuItems()}
+            </Select>
+          </Box>
+        </StyledBox>
+      )}
+    </Draggable>
   )
 }
 

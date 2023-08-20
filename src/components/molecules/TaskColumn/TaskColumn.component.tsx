@@ -3,6 +3,7 @@ import { Box, styled, Typography } from '@mui/material'
 import { TaskColumnProps } from './TaskColumn.type'
 import { TaskCard } from '../TaskCard'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
+import { Draggable, Droppable } from 'react-beautiful-dnd'
 
 const StyledBox = styled(Box)<{ isActiveColumn?: boolean }>(({
   isActiveColumn,
@@ -36,6 +37,7 @@ const StyledTitle = styled(Typography)(({}) => {
 })
 
 export const TaskColumn = ({
+  id,
   title,
   tasks,
   events,
@@ -78,22 +80,26 @@ export const TaskColumn = ({
 
   // Display the title and all tasks in the column for larger devices
   return (
-    <>
-      <StyledBox
-        className="task-column"
-        isActiveColumn={
-          activeTaskTab === tasks?.[0]?.status || activeTaskTab === 'all'
-        }
-      >
-        <StyledTitle variant="h6">
-          {title} {tasks?.length}
-        </StyledTitle>
+    <Droppable droppableId={`${id}`}>
+      {(provided) => (
+        <StyledBox
+          className="task-column"
+          isActiveColumn={
+            activeTaskTab === tasks?.[0]?.status || activeTaskTab === 'all'
+          }
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+        >
+          <StyledTitle variant="h6">
+            {title} {tasks?.length}
+          </StyledTitle>
 
-        {tasks?.map((task) => (
-          <TaskCard key={task.id} {...task} events={events} />
-        ))}
-      </StyledBox>
-    </>
+          {tasks?.map((task, index) => (
+            <TaskCard key={task.id} {...task} events={events} index={index} />
+          ))}
+        </StyledBox>
+      )}
+    </Droppable>
   )
 }
 
