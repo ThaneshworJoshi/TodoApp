@@ -5,6 +5,9 @@ const StyledHeaderWrapper = styled(Box)(() => {
   return {
     padding: '20px 0',
     backgroundColor: '#76CC8E',
+    position: 'sticky',
+    top: 0,
+    zIndex: 1,
   }
 })
 export const Header = () => {

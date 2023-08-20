@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { TaskBoard } from './components/organisms'
+import { Header, TaskBoard } from './components/organisms'
 import { useTaskBoardData } from './hooks/useTaskBoardData'
 import { useAppDispatch, useAppSelector } from './redux/hooks'
 import { fetchTodos } from './redux/features/todoSlice'
@@ -16,7 +16,12 @@ function App() {
     dispatch(fetchTodos())
   }, [dispatch])
 
-  return <TaskBoard columns={taskBoardData} todos={todos} />
+  return (
+    <>
+      <Header />
+      <TaskBoard columns={taskBoardData} todos={todos} />
+    </>
+  )
 }
 
 export default App

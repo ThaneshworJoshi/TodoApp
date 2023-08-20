@@ -20,8 +20,6 @@ const BoardWrapperBox = styled(Box)(() => {
   return {
     padding: '10px',
     borderRadius: '5px',
-    boxShadow: '0px 0px 3px 3px rgba(0,0,0,0.1)',
-    backgroundColor: '#f5eded',
     width: '100%',
     height: 'auto',
   }
