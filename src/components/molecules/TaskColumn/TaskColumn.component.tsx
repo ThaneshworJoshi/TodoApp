@@ -11,9 +11,9 @@ const StyledBox = styled(Box)<{ isActiveColumn?: boolean }>(({
   return {
     flex: 1,
     borderRadius: '5px',
-    boxShadow: '0px 0px 3px 3px rgba(0,0,0,0.1)',
+    // boxShadow: '0px 0px 3px 3px rgba(0,0,0,0.1)',
     padding: '20px 20px 10px',
-    backgroundColor: '#e6ecf0',
+    backgroundColor: '#e7f1ec',
     width: 'fit-content',
     height: '88vh',
     overflowY: 'auto',

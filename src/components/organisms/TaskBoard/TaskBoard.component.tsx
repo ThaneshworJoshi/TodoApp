@@ -13,7 +13,25 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import DragDropContextHoc from '../../../common/components/HOC/DragDropContextHoc'
 
 const StyledContainer = styled(Container)(() => {
-  return {}
+  return {
+    overflowY: 'scroll',
+    // maxHeight: 400, // Adjust the max-height as needed
+
+    /* Customize the scrollbar track and thumb */
+    '&::-webkit-scrollbar': {
+      width: 8, // Width of the scrollbar
+    },
+
+    '&::-webkit-scrollbar-track': {
+      background: '#fff !important', // Background color of the track
+    },
+
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: '#999', // Background color of the thumb
+      borderRadius: 6,
+      border: '3px solid #000',
+    },
+  }
 })
 
 const BoardWrapperBox = styled(Box)(() => {

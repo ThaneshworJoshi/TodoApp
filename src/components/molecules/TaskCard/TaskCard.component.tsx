@@ -18,8 +18,8 @@ import { Draggable } from 'react-beautiful-dnd'
 
 const StyledBox = styled(Box)(({ theme }) => {
   return {
-    border: '1px solid rgba(0,0,0,0.2)',
-    boxShadow: '0px 0px 3px 3px rgba(0,0,0,0.1)',
+    // border: '1px solid rgba(0,0,0,0.2)',
+    boxShadow: '0px 0px 10px 10px rgba(0,0,0,0)',
     padding: '20px',
     backgroundColor: theme.palette.common.white,
   }
