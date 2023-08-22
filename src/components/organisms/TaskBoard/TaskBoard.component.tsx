@@ -73,6 +73,7 @@ export const TaskBoard = ({ columns, todos }: TaskBoardProps) => {
   const handleEdit = (editedTask: any) => {
     dispatch(editTodo(editedTask))
     setOpenModal(false)
+    setTaskId('')
   }
 
   const handleAdd = (newTask: any) => {
