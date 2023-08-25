@@ -13,7 +13,7 @@
     5. Prettier: For code formatting
     6. RTK: For state management
     7. Axios: For API requests
-    8. MUI : For rapid UI developemen
+    8. MUI : For rapid UI developement
     9. Json-server: For backend server
 
 ## Project installation
@@ -39,3 +39,7 @@
 2.  Start JSON Server with the provided db.json file and specify the port (e.g., 5000):
 
         json-server --watch db.json --port 5000
+
+### Screen Shot
+
+![Alt text](./public/ss.png)
